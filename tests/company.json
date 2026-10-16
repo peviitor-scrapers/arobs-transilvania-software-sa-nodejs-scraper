@@ -1,0 +1,32 @@
+{
+  "_comment": "Example shape of the tmp/company.json cache written by scraper/company.js. Not loaded by any test — kept as a reference.",
+  "validatedAt": "2026-01-01T10:00:00.000Z",
+  "source": "CUIScan",
+  "brand": "AROBS",
+  "anaf": {
+    "cui": 12345678,
+    "name": "AROBS TRANSILVANIA SOFTWARE S.A.",
+    "address": "STR. EXAMPLE, NR.1, LOCALITATE",
+    "registrationNumber": "J00/000/2000",
+    "caenCode": "0000",
+    "vatRegistered": true,
+    "inactive": false,
+    "headquartersAddress": { "locality": "Cluj-Napoca", "county": "Cluj-Napoca" },
+    "onrcStatusLabel": "Funcțiune"
+  },
+  "peviitor": {
+    "id": "12345678",
+    "company": "AROBS TRANSILVANIA SOFTWARE S.A.",
+    "brand": "AROBS",
+    "status": "activ",
+    "website": ["https://www.arobs.com"],
+    "career": ["https://www.arobs.com/careers-at-arobs/"],
+    "lastScraped": "2026-01-01"
+  },
+  "summary": {
+    "company": "AROBS TRANSILVANIA SOFTWARE S.A.",
+    "cif": "12345678",
+    "active": true,
+    "address": "STR. EXAMPLE, NR.1, LOCALITATE"
+  }
+}

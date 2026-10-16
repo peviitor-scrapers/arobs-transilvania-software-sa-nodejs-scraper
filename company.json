@@ -1,0 +1,88 @@
+{
+  "validatedAt": "2026-10-16T16:11:37.737Z",
+  "source": "ANAF",
+  "brand": "AROBS",
+  "anaf": {
+    "cui": 11291045,
+    "name": "AROBS TRANSILVANIA SOFTWARE S.A.",
+    "address": "JUD. CLUJ, MUN. CLUJ-NAPOCA, STR. MINERILOR, NR.63",
+    "registrationNumber": "J1998001845122",
+    "phone": "",
+    "fax": "",
+    "postalCode": "400409",
+    "caenCode": "6210",
+    "iban": "",
+    "registrationState": "INREGISTRAT din data 18.12.1998",
+    "registrationDate": "1998-12-18",
+    "fiscalAuthority": "Direcţia Generală de Administrare a Marilor Contribuabili",
+    "ownershipForm": "PROPR.PRIVATA-CAPITAL PRIVAT AUTOHTON",
+    "organizationForm": "PERSOANA JURIDICA",
+    "legalForm": "SOCIETATE COMERCIALĂ PE ACŢIUNI",
+    "vatRegistered": true,
+    "vatPeriods": [
+      {
+        "start": "2000-04-01",
+        "end": null,
+        "yearStart": "",
+        "message": ""
+      }
+    ],
+    "cashBasisVat": false,
+    "cashBasisVatStart": null,
+    "cashBasisVatEnd": null,
+    "inactive": false,
+    "inactiveSince": null,
+    "reactivatedSince": null,
+    "splitVat": false,
+    "eFacturaRegistered": false,
+    "headquartersAddress": {
+      "street": "Str. Donath",
+      "number": "11",
+      "locality": "Mun. Cluj-Napoca",
+      "county": "CLUJ",
+      "country": "",
+      "postalCode": ""
+    },
+    "fiscalAddress": {
+      "street": "",
+      "number": "",
+      "locality": "",
+      "county": "",
+      "country": "",
+      "postalCode": ""
+    },
+    "administrators": [],
+    "authorizedCaenCodes": [],
+    "onrcStatus": 0,
+    "onrcStatusLabel": "Funcțiune"
+  },
+  "peviitor": {
+    "id": "11291045",
+    "company": "AROBS TRANSILVANIA SOFTWARE S.A.",
+    "brand": "AROBS TRANSILVANIA SOFTWARE S.",
+    "status": "activ",
+    "location": [
+      "Municipiul Cluj-Napoca"
+    ],
+    "lastScraped": "2026-07-30",
+    "scraperFile": "inviitor-ro-nodejs-scraper",
+    "address": [
+      "Municipiul Cluj-Napoca, Cluj"
+    ],
+    "anafData": [
+      "{\"cif\":11291045,\"cui\":11291045,\"denumire\":\"AROBS TRANSILVANIA SOFTWARE S.A.\",\"company\":\"AROBS TRANSILVANIA SOFTWARE S.A.\",\"brand\":\"AROBS TRANSILVANIA SOFTWARE S.\",\"statusImpozit\":\"activ\",\"adresa\":\"Municipiul Cluj-Napoca, Cluj\",\"localitate\":\"Municipiul Cluj-Napoca\",\"website\":\"\"}"
+    ],
+    "existingJobsCount": [
+      0
+    ],
+    "_version_": 1872140384064241700,
+    "_root_": "11291045"
+  },
+  "summary": {
+    "company": "AROBS TRANSILVANIA SOFTWARE S.A.",
+    "cif": "11291045",
+    "active": true,
+    "inactiveSince": null,
+    "address": "JUD. CLUJ, MUN. CLUJ-NAPOCA, STR. MINERILOR, NR.63"
+  }
+}

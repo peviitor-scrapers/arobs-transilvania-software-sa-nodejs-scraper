@@ -1,0 +1,22 @@
+{
+  "userAgent": "job_seeker_ro_spider",
+  "requestTimeoutMs": 10000,
+  "pageDelayMs": 1000,
+  "rendering": { "mode": "static", "waitSelector": "", "timeoutMs": 30000 },
+  "staleJobDeletion": false,
+  "manageCompany": true,
+  "defaultLocation": ["Cluj-Napoca"],
+  "defaultWorkmode": "on-site",
+  "ownJobUrlPrefix": "https://careers-arobs.icims.com/jobs/",
+  "sources": {
+    "sitemap": "",
+    "icims": "https://careers-arobs.icims.com/jobs/search?ss=1&hashed=-435624355",
+    "listing": "https://careers-arobs.icims.com/jobs/search?ss=1&hashed=-435624355",
+    "jobArchive": "https://careers-arobs.icims.com/jobs/"
+  },
+  "selectors": {
+    "jobArticle": ["", "[class*='job']", ".vacancy, .position, .listing-item"],
+    "jobTitle": ["", "h1, h2, h3, h4", "[itemprop='title'], [aria-label]", "a"],
+    "jobMeta": ["", "p, .meta, [class*='deadline']"]
+  }
+}

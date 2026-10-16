@@ -1,0 +1,5 @@
+# Default owner
+*       @peviitor-scrapers
+
+# Code owners for specific directories
+/.github/workflows/ @peviitor-scrapers

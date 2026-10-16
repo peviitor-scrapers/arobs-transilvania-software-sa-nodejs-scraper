@@ -1,0 +1,104 @@
+/**
+ * Company Job URL Validator (CI)
+ *
+ * Validation modes:
+ *   --head      HEAD requests only (fast, default)
+ *   --content   GET + body scan (catches HTML soft-404s) — recommended deep mode;
+ *               most careers sites are server-rendered, so no browser is needed
+ *   --browser   Playwright headless Chromium; falls back to --content if Playwright
+ *               is not installed (it is not a dependency of this repo)
+ *
+ * Action flags:
+ *   --dry-run   Show invalid jobs but do not delete
+ *   --delete    Delete invalid jobs from SOLR after listing
+ *
+ * Called nightly by .github/workflows/tests.yml and manually via
+ * .github/workflows/job-deep-validate.yml (--content mode).
+ */
+import companyConfig from "../scraper/config/company.js";
+import scraperConfig from "../scraper/config/scraper.js";
+import { querySOLR, deleteJobByUrl } from "../scraper/api.js";
+import { validateByHead, validateByContent, validateByBrowser } from "../scraper/job-validator.js";
+
+const CIF = companyConfig.id;
+const COMPANY = companyConfig.company;
+// The same CIF can carry jobs from OTHER peviitor scrapers / aggregators
+// (eJobs, BestJobs imports, etc.) -- querySOLR(CIF) returns all of them, but
+// this script must only ever delete the ones THIS scraper owns. Without this
+// check, a URL format this scraper doesn't recognize (or a transient block
+// on someone else's site) would get silently deleted here, every night.
+const OWN_URL_PREFIX = scraperConfig.ownJobUrlPrefix;
+const isOwnJob = (url) => typeof url === "string" && url.startsWith(OWN_URL_PREFIX);
+
+function getTimeout() {
+  const idx = process.argv.indexOf("--timeout");
+  if (idx !== -1 && idx + 1 < process.argv.length) {
+    return parseInt(process.argv[idx + 1], 10);
+  }
+  return undefined;
+}
+
+function getValidator() {
+  if (process.argv.includes("--browser")) return validateByBrowser;
+  if (process.argv.includes("--content")) return validateByContent;
+  return validateByHead;
+}
+
+async function main() {
+  const dryRun = process.argv.includes("--dry-run");
+  const doDelete = process.argv.includes("--delete");
+  const timeout = getTimeout();
+  const validate = getValidator();
+  const mode = process.argv.includes("--browser") ? "browser" : process.argv.includes("--content") ? "content" : "head";
+
+  console.log(`=== Validating ${COMPANY} (CIF: ${CIF}) | mode: ${mode}${timeout ? ` | timeout: ${timeout}ms` : ""} ===\n`);
+
+  const result = await querySOLR(CIF);
+  console.log(`Total jobs in SOLR: ${result.numFound}`);
+
+  if (result.numFound === 0) {
+    console.log("No jobs to validate.");
+    return;
+  }
+
+  const invalid = [];
+  for (const job of result.docs) {
+    const opts = timeout ? { timeout } : {};
+    const check = await validate(job.url, opts);
+    console.log(`[${check.httpStatus}] ${check.status === "active" ? "OK" : check.status} - ${job.title}`);
+    if (check.status !== "active") invalid.push(job);
+  }
+
+  if (invalid.length === 0) {
+    console.log("\n✅ All jobs valid");
+    return;
+  }
+
+  console.log(`\n⚠️ ${invalid.length} invalid jobs found`);
+  for (const job of invalid) {
+    console.log(`  ${job.title} | ${job.url}`);
+  }
+
+  const ours = invalid.filter((job) => isOwnJob(job.url));
+  const notOurs = invalid.filter((job) => !isOwnJob(job.url));
+  if (notOurs.length > 0) {
+    console.log(`\n${notOurs.length} invalid job(s) belong to another scraper on this CIF — never touched:`);
+    for (const job of notOurs) console.log(`  ${job.title} | ${job.url}`);
+  }
+
+  if (dryRun) {
+    console.log("(dry run — no deletions performed)");
+    return;
+  }
+  if (doDelete) {
+    for (const job of ours) {
+      await deleteJobByUrl(job.url);
+      console.log(`Deleted: ${job.title}`);
+    }
+  }
+}
+
+main().catch(err => {
+  console.error("Fatal:", err.message);
+  process.exit(1);
+});

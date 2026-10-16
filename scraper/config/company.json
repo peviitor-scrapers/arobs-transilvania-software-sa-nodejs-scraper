@@ -1,0 +1,10 @@
+{
+  "id": "11291045",
+  "company": "AROBS TRANSILVANIA SOFTWARE S.A.",
+  "brand": "AROBS",
+  "status": "activ",
+  "location": ["Cluj-Napoca"],
+  "website": ["https://www.arobs.com"],
+  "career": ["https://www.arobs.com/careers-at-arobs/"],
+  "scraperFile": "https://github.com/peviitor-scrapers/arobs-transilvania-software-sa-nodejs-scraper/actions/workflows/scrape.yml"
+}
