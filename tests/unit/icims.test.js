@@ -39,6 +39,13 @@ describe('iCIMS source', () => {
     expect(jobs[1].location).toEqual(['România']);
   });
 
+  it('drops the county prefix of RO-<County>-<City> but keeps hyphenated city names whole', () => {
+    expect(index.parseIcimsLocation('RO-Timiș-Timisoara')).toEqual(['Timișoara']);
+    expect(index.parseIcimsLocation('RO-Cluj-Cluj Napoca')).toEqual(['Cluj-Napoca']);
+    expect(index.parseIcimsLocation('RO-Cluj-Napoca')).toEqual(['Cluj-Napoca']);
+    expect(index.parseIcimsLocation('RO-Bucharest')).toEqual(['București']);
+  });
+
   it('decodes entities in titles and detects remote work from the description', () => {
     const { jobs } = index.parseIcimsPage(page, 'https://careers-arobs.icims.com/');
     expect(jobs[1].title).toBe('QA Engineer & Tester');

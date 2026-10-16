@@ -268,25 +268,35 @@ function locationFromTitle(title) {
 // iCIMS career portal (careers-arobs.icims.com)
 // ============================================================================
 
-const ICIMS_CITY_MAP = {
-  "Cluj Napoca": "Cluj-Napoca",
-  "Bucharest": "București",
-  "Bucuresti": "București",
-  "Timisoara": "Timișoara",
-  "Iasi": "Iași",
-  "Brasov": "Brașov",
-  "Targu Mures": "Târgu Mureș"
-};
+// Normalised (lowercase, no diacritics, spaces -> "-") portal spelling -> canonical city.
+const ICIMS_CITIES = Object.fromEntries([
+  "Cluj-Napoca", "București", "Timișoara", "Iași", "Brașov", "Târgu Mureș", "Sibiu", "Oradea",
+  "Arad", "Baia Mare", "Suceava", "Constanța", "Craiova", "Ploiești", "Pitești", "Galați", "Bacău"
+].map((c) => [normCity(c), c]));
+ICIMS_CITIES.bucharest = "București";
+
+function normCity(s) {
+  return s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim().replace(/\s+/g, "-");
+}
+
+// The portal writes "RO-Bucharest", "RO-Cluj Napoca" or "RO-<County>-<City>" (e.g.
+// "RO-Timiș-Timisoara"). Match the longest dash-separated suffix that is a known
+// city, so the county prefix is dropped but "Cluj-Napoca" itself stays whole.
+function icimsCity(raw) {
+  const parts = raw.replace(/^RO[- ]*/, "").split("-").map((p) => p.trim()).filter(Boolean);
+  for (let i = 0; i < parts.length; i++) {
+    const hit = ICIMS_CITIES[normCity(parts.slice(i).join("-"))];
+    if (hit) return hit;
+  }
+  return parts.join("-");
+}
 
 // "RO-Cluj Napoca | RO-Bucharest" -> ["Cluj-Napoca", "București"]
 function parseIcimsLocation(raw) {
   if (!raw || raw.trim() === "RO") return ["România"];
-  const cities = raw
-    .split("|")
-    .map((part) => part.trim().replace(/^RO[- ]*/, "").trim())
-    .filter(Boolean)
-    .map((c) => ICIMS_CITY_MAP[c] || c);
-  return [...new Set(cities)].length ? [...new Set(cities)] : ["România"];
+  const cities = raw.split("|").map((p) => icimsCity(p.trim())).filter(Boolean);
+  const unique = [...new Set(cities)];
+  return unique.length ? unique : ["România"];
 }
 
 function icimsSeniorityTag(seniority = "") {

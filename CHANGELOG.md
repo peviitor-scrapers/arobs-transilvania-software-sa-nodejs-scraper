@@ -16,6 +16,7 @@ template version, which `automation-template-sync-check.yml` compares against).
   outage trips the empty-scrape guard instead of uploading junk.
 - `parseIcimsPage` / `scrapeIcims` + unit tests (`tests/unit/icims.test.js`) and a live
   e2e check (`tests/e2e/icims.test.js`).
+- Locations parsed from the portal's `RO-<County>-<City>` spelling (longest known-city suffix).
 - Tags from the portal's Seniority/Category fields and the title (never from the card
   description); no seniority tag is invented when the portal gives none.
 - Replaces the earlier personal-account scraper that wrote straight to Solr; jobs now go
