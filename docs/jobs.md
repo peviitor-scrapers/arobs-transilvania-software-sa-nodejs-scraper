@@ -10,11 +10,11 @@
 | Location | JUD. CLUJ, MUN. CLUJ-NAPOCA, STR. MINERILOR, NR.63 |
 | Website | [https://www.arobs.com](https://www.arobs.com) |
 | Careers | [https://www.arobs.com/careers-at-arobs/](https://www.arobs.com/careers-at-arobs/) |
-| Last Scraped | 2026-10-17 |
+| Last Scraped | 2026-10-18 |
 
-## Current Job Listings (8)
+## Current Job Listings (9)
 
-_Generated: 2026-10-17T10:10:21.304Z_
+_Generated: 2026-10-18T10:25:53.149Z_
 
 ### Embedded AI/ML Platform Integration Engineer
 
@@ -54,6 +54,12 @@ _Generated: 2026-10-17T10:10:21.304Z_
 - **Work Mode:** on-site
 - **Location:** București
 - **Tags:** senior, it, embedded
+- **Status:** scraped
+
+### INGINER DE SISTEM ÎN INFORMATICA
+
+- **URL:** [https://mediere.anofm.ro/app/module/mediere/job/3418949](https://mediere.anofm.ro/app/module/mediere/job/3418949)
+- **Location:** CLUJ-NAPOCA
 - **Status:** scraped
 
 ### AGENT SERVICII CLIENT
