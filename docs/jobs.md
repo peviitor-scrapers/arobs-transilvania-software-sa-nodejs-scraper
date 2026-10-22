@@ -10,11 +10,11 @@
 | Location | JUD. CLUJ, MUN. CLUJ-NAPOCA, STR. MINERILOR, NR.63 |
 | Website | [https://www.arobs.com](https://www.arobs.com) |
 | Careers | [https://www.arobs.com/careers-at-arobs/](https://www.arobs.com/careers-at-arobs/) |
-| Last Scraped | 2026-10-21 |
+| Last Scraped | 2026-10-22 |
 
-## Current Job Listings (8)
+## Current Job Listings (7)
 
-_Generated: 2026-10-21T11:11:23.280Z_
+_Generated: 2026-10-22T11:10:51.751Z_
 
 ### Embedded AI/ML Platform Integration Engineer
 
@@ -22,14 +22,6 @@ _Generated: 2026-10-21T11:11:23.280Z_
 - **Work Mode:** on-site
 - **Location:** București
 - **Tags:** senior, it, embedded, ai
-- **Status:** scraped
-
-### Automotive Embedded Software Test Architect
-
-- **URL:** [https://careers-arobs.icims.com/jobs/3491/automotive-embedded-software-test-architect/job](https://careers-arobs.icims.com/jobs/3491/automotive-embedded-software-test-architect/job)
-- **Work Mode:** on-site
-- **Location:** București
-- **Tags:** senior, qa, it, embedded, automotive
 - **Status:** scraped
 
 ### Hardware Engineer - Embedded
