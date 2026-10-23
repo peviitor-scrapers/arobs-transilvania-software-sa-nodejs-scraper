@@ -71,8 +71,26 @@ function itIfApi(name, fn, timeout) {
   return it.skip(`${name} (skipped: ${CONFIGURED ? 'API unavailable' : 'company not configured'})`, fn, timeout);
 }
 
+// ANAF / CUIScan / CUIFirma are third-party services outside our control. When one of
+// them is down (HTTP 5xx, an HTML maintenance page, a timeout) the live check says
+// nothing about the scraper, so it must not fail the build - and send a "Run failed"
+// email every day. Real assertion failures still fail.
+const UPSTREAM_OUTAGE = /non-JSON response|API error: \d{3}|search error: \d{3}|returned no data|fetch failed|ECONN|ETIMEDOUT|ENOTFOUND|aborted due to timeout|TimeoutError|All company data sources unavailable/i;
+
+async function tolerateOutage(fn) {
+  try {
+    await fn();
+  } catch (err) {
+    if (UPSTREAM_OUTAGE.test(String((err && err.message) || err))) {
+      console.warn(`Upstream ANAF/CUIScan outage - not a scraper problem, skipping assertions: ${err.message}`);
+      return;
+    }
+    throw err;
+  }
+}
+
 function itIfAnaf(name, fn, timeout) {
-  if (CONFIGURED && HAS_ANAF) return it(name, fn, timeout);
+  if (CONFIGURED && HAS_ANAF) return it(name, () => tolerateOutage(fn), timeout);
   return it.skip(`${name} (skipped: ${CONFIGURED ? 'ANAF unavailable' : 'company not configured'})`, fn, timeout);
 }
 

@@ -65,13 +65,28 @@ function mapCuiscanToAnafFormat(data) {
   };
 }
 
+/**
+ * Parse a fetch Response as JSON, throwing a clear error when the service
+ * answered with something else (typically an HTML error/maintenance page while
+ * the upstream is down) instead of an opaque "Unexpected token '<'" SyntaxError.
+ * @param {Response} res
+ * @param {string} label service name used in the error message
+ */
+export async function parseJsonResponse(res, label) {
+  try {
+    return await res.json();
+  } catch {
+    throw new Error(`${label} returned a non-JSON response (HTTP ${res.status}) - service likely down`);
+  }
+}
+
 async function fetchFromCuiscan(cif) {
   const res = await fetch(`${CUISCAN_API_URL}?action=company&cui=${cif}`, {
     headers: { "User-Agent": userAgent },
     signal: AbortSignal.timeout(TIMEOUT_MS)
   });
   if (!res.ok) throw new Error(`CUIScan API error: ${res.status}`);
-  const json = await res.json();
+  const json = await parseJsonResponse(res, "CUIScan");
   if (!json || !json.denumire) throw new Error("CUIScan returned no data");
   return mapCuiscanToAnafFormat(json);
 }
@@ -86,7 +101,7 @@ async function fetchFromAnaf(cif) {
     signal: AbortSignal.timeout(TIMEOUT_MS)
   });
   if (!res.ok) throw new Error(`ANAF API error: ${res.status}`);
-  const json = await res.json();
+  const json = await parseJsonResponse(res, "ANAF");
   if (json.success === false) throw new Error(json.error?.message || "ANAF returned error");
   return json.data || null;
 }
@@ -97,7 +112,7 @@ async function searchFromAnaf(brandName) {
     signal: AbortSignal.timeout(TIMEOUT_MS)
   });
   if (!res.ok) throw new Error(`ANAF search error: ${res.status}`);
-  const json = await res.json();
+  const json = await parseJsonResponse(res, "ANAF search");
   return json.data || [];
 }
 
@@ -111,7 +126,7 @@ async function searchFromCuifirma(brandName) {
     signal: AbortSignal.timeout(TIMEOUT_MS)
   });
   if (!res.ok) throw new Error(`CUIFirma search error: ${res.status}`);
-  const json = await res.json();
+  const json = await parseJsonResponse(res, "CUIFirma");
   return (json.results || []).map(r => ({
     cui: String(r.cui),
     name: r.name,
