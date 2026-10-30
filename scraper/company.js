@@ -108,7 +108,17 @@ async function getCompanyFromPeviitor(companyName) {
   }
 
   const data = await res.json();
-  return data.companies?.[0] || null;
+  // api.peviitor.ro/v1/company/?name= does NOT filter server-side: it returns
+  // the same unfiltered first page whatever the query is (live: "total" ~1700,
+  // first entry an unrelated company). Taking companies[0] would label this
+  // scraper's jobs with another company's name, so keep only an exact
+  // (case-insensitive) name match; no match falls back to the ANAF name.
+  const target = companyName.trim().toUpperCase();
+  return (
+    (data.companies || []).find(
+      (c) => typeof c.company === "string" && c.company.trim().toUpperCase() === target
+    ) || null
+  );
 }
 
 // ============================================================================
