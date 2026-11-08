@@ -10,11 +10,11 @@
 | Location | JUD. CLUJ, MUN. CLUJ-NAPOCA, STR. MINERILOR, NR.63 |
 | Website | [https://www.arobs.com](https://www.arobs.com) |
 | Careers | [https://www.arobs.com/careers-at-arobs/](https://www.arobs.com/careers-at-arobs/) |
-| Last Scraped | 2026-11-07 |
+| Last Scraped | 2026-11-08 |
 
 ## Current Job Listings (6)
 
-_Generated: 2026-11-07T12:29:04.920Z_
+_Generated: 2026-11-08T12:46:25.157Z_
 
 ### Embedded AI/ML Platform Integration Engineer
 
