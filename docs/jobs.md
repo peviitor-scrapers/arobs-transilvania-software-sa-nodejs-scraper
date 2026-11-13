@@ -14,7 +14,7 @@
 
 ## Current Job Listings (7)
 
-_Generated: 2026-11-13T07:05:30.797Z_
+_Generated: 2026-11-13T13:56:41.705Z_
 
 ### Embedded AI/ML Platform Integration Engineer
 
